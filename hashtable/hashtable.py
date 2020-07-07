@@ -94,7 +94,18 @@ class HashTable:
         """
         # Your code here
         i = self.hash_index(key)
-        self.storage[i] = value
+        if not self.storage[i]:
+            self.storage[i] = HashTableEntry(key, value)
+        else:
+            node = self.storage[i]
+            while node:
+                if node.value == key:
+                    node.value = value
+                    return value
+                else:
+                    prev_node = node
+                    node = node.next
+            prev_node.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -106,7 +117,13 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        self.storage[index] = None
+        if not self.storage[i]:
+            print('No data to be deleted')
+        else:
+            while node.key != key:
+                prev_node = node
+                node = node.next
+            prev_node.next = node.next
 
     def get(self, key):
         """
