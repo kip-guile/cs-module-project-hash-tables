@@ -117,7 +117,7 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        if not self.storage[i]:
+        if not self.storage[index]:
             print('No data to be deleted')
         else:
             while node.key != key:
@@ -135,7 +135,12 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        return self.storage[index]
+        node = self.storage[index]
+        while node:
+            if node.key == key:
+                return node.value
+            else:
+                node = node.next
 
     def resize(self, new_capacity):
         """
