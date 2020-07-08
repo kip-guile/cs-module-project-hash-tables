@@ -50,6 +50,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        load_factor = self.usage / self.get_num_slots()
+
+        if load_factor > 0.7:
+            self.resize(16)
+        elif load_factor < 0.2:
+            self.resize(4)
 
     def fnv1(self, key):
         """
@@ -98,14 +104,9 @@ class HashTable:
             self.storage[i] = HashTableEntry(key, value)
         else:
             node = self.storage[i]
-            while node:
-                if node.value == key:
-                    node.value = value
-                    return value
-                else:
-                    prev_node = node
-                    node = node.next
-            prev_node.next = HashTableEntry(key, value)
+            while node.next:
+                node = node.next
+            node.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -120,10 +121,14 @@ class HashTable:
         if not self.storage[index]:
             print('No data to be deleted')
         else:
-            while node.key != key:
-                prev_node = node
-                node = node.next
-            prev_node.next = node.next
+            node = self.storage[index]
+            if not node.next:
+                self.storage[index] = None
+            else:
+                while node.key != key:
+                    prev_node = node
+                    node = node.next
+                prev_node.next = node.next
 
     def get(self, key):
         """
@@ -150,6 +155,11 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        self.capacity = factor
+        new_storage = [None] * factor
+        for i in range(self.usage):
+            new_storage[i] = self.storage[i]
+        self.storage = new_storage
 
 
 if __name__ == "__main__":
