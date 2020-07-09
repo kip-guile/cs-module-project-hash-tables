@@ -12,6 +12,7 @@ def no_dups(s):
             newStr = newStr + str(key)
         else:
             newStr = newStr + ' ' + str(key)
+
     return newStr
 
 

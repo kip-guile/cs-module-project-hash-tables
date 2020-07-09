@@ -48,4 +48,5 @@ def slowfun(x, y):
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
+    print(finals)
     print(f'{i}: {x},{y}: {slowfun(x, y)}')
